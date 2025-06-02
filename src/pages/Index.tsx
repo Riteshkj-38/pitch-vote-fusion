@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Trophy, Zap, Vote } from "lucide-react";
+import { Users, Trophy, Zap, Vote, Lightbulb, Search, BarChart3 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
@@ -14,7 +14,8 @@ const Index = () => {
   const stats = {
     totalParticipants: 24,
     totalVotes: 156,
-    activePitches: 8
+    activePitches: 8,
+    totalIdeas: 47
   };
 
   const currentPitcher = {
@@ -56,7 +57,7 @@ const Index = () => {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card className="bg-white/60 backdrop-blur-sm border-white/20 hover:shadow-lg transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Participants</CardTitle>
@@ -64,6 +65,16 @@ const Index = () => {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-blue-600">{stats.totalParticipants}</div>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-white/60 backdrop-blur-sm border-white/20 hover:shadow-lg transition-all duration-300">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Ideas</CardTitle>
+              <Lightbulb className="h-4 w-4 text-yellow-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-yellow-600">{stats.totalIdeas}</div>
             </CardContent>
           </Card>
           
@@ -84,6 +95,61 @@ const Index = () => {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-orange-600">{stats.activePitches}</div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Main Actions */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          {/* Submit Ideas */}
+          <Card className="bg-white/80 backdrop-blur-md border-white/30 shadow-xl">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Lightbulb className="h-6 w-6 mr-2 text-yellow-500" />
+                Submit Your Ideas
+              </CardTitle>
+              <CardDescription>
+                Share your innovative ideas for the hackathon. Minimum 3 ideas required.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="text-sm text-gray-600">
+                • Submit 3-5 innovative ideas<br/>
+                • Choose relevant categories<br/>
+                • Provide detailed descriptions
+              </div>
+              <Button 
+                onClick={() => navigate('/create-idea')}
+                className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600"
+              >
+                Submit Ideas
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Browse & Vote */}
+          <Card className="bg-white/80 backdrop-blur-md border-white/30 shadow-xl">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Search className="h-6 w-6 mr-2 text-blue-500" />
+                Browse & Vote
+              </CardTitle>
+              <CardDescription>
+                Explore ideas from colleagues and cast your votes for the best ones.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="text-sm text-gray-600">
+                • Search through all submitted ideas<br/>
+                • Filter by categories<br/>
+                • Vote for your favorites
+              </div>
+              <Button 
+                onClick={() => navigate('/browse-ideas')}
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              >
+                Browse Ideas
+              </Button>
             </CardContent>
           </Card>
         </div>
@@ -178,20 +244,30 @@ const Index = () => {
 
         {/* Quick Actions */}
         <div className="mt-8 text-center">
-          <div className="inline-flex space-x-4">
+          <div className="inline-flex flex-wrap gap-4 justify-center">
             <Button 
               variant="outline" 
               onClick={() => navigate('/leaderboard')}
               className="bg-white/60 backdrop-blur-sm"
             >
+              <BarChart3 className="h-4 w-4 mr-2" />
               View Leaderboard
             </Button>
             <Button 
               variant="outline"
-              onClick={() => navigate('/schedule')}
+              onClick={() => navigate('/browse-ideas')}
               className="bg-white/60 backdrop-blur-sm"
             >
-              Pitch Schedule
+              <Search className="h-4 w-4 mr-2" />
+              Browse All Ideas
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={() => navigate('/create-idea')}
+              className="bg-white/60 backdrop-blur-sm"
+            >
+              <Lightbulb className="h-4 w-4 mr-2" />
+              Submit Ideas
             </Button>
           </div>
         </div>
